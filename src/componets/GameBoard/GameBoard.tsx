@@ -2,15 +2,10 @@
 interface GameBoardProps {
   onSelectGrid: (rowIndex: number, colIndex: number) => void;
   //     activePlayerSymbol:string;
-  turns: { square: { row: number; col: number }; player: "X" | "O" }[];
+  board: string[][];
 }
-const grid = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""],
-];
 
-export default function GameBoard({ onSelectGrid, turns }: GameBoardProps) {
+export default function GameBoard({ onSelectGrid, board }: GameBoardProps) {
   // const [gameBoard,setGameBoard]=useState(grid);
 
   // function handleSelect(row:number,col:number){
@@ -23,22 +18,19 @@ export default function GameBoard({ onSelectGrid, turns }: GameBoardProps) {
   //     });
   //     onSelectGrid();
   // }
-//   const copiedGameBoard = grid.map((row) => [...row]);
-  const copiedGameBoard=grid;
-  for (const turn of turns) {
-    const { square, player } = turn;
-    const { row, col } = square;
-    copiedGameBoard[row][col] = player;
-  }
+  //   const copiedGameBoard = grid.map((row) => [...row]);
 
   return (
     <ol id="game-board">
-      {copiedGameBoard.map((row, rowIndex) => (
+      {board.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((col, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => onSelectGrid(rowIndex, colIndex)}>
+                <button
+                  onClick={() => onSelectGrid(rowIndex, colIndex)}
+                  disabled={col !== ""}
+                >
                   {col}
                 </button>
               </li>
